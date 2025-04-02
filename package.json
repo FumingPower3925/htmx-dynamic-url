@@ -1,0 +1,44 @@
+{
+    "name": "htmx-dynamic-url",
+    "version": "1.0.0",
+    "description": "HTMX extension to allow dynamic URL path templating based on JavaScript variables or store values.",
+    "main": "src/dynamic-url.js",
+    "type": "module",
+    "scripts": {
+      "test": "karma start karma.conf.cjs --single-run",
+      "test:watch": "karma start karma.conf.cjs"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/FumingPower3925/htmx-dynamic-url.git"
+    },
+    "keywords": [
+      "htmx",
+      "htmx-extension",
+      "url",
+      "path",
+      "template",
+      "dynamic",
+      "parameter"
+    ],
+    "author": "FumingPower3925",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/FumingPower3925/htmx-dynamic-url/issues"
+    },
+    "homepage": "https://github.com/FumingPower3925/htmx-dynamic-url#readme",
+    "devDependencies": {
+      "chai": "^4.3.10",
+      "htmx.org": "^1.9.12",
+      "karma": "^6.4.2",
+      "karma-chai": "^0.1.0",
+      "karma-chrome-launcher": "^3.2.0",
+      "karma-mocha": "^2.0.1",
+      "mocha": "^10.3.0"
+    },
+    "files": [
+      "src/dynamic-url.js",
+      "README.md",
+      "LICENSE"
+    ]
+  }
