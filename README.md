@@ -6,10 +6,15 @@ This is useful for creating dynamic URLs based on JavaScript state without resor
 
 ## Installation
 
-Include the extension script (`dynamic-url.js`) after HTMX itself:
+Include the extension script (`dynamic-url.js` or the minified `dynamic-url.min.js`) after HTMX itself.
 
+**Using Source:**
 ```html
 <script src="path/to/dynamic-url.js"></script>
+```
+**Using Minified (Recommended for Production):**
+```html
+<script src="path/to/dynamic-url.min.js"></script>
 ```
 
 > (Make sure `dynamic-url.js` is loaded before HTMX initializes or processes the relevant part of the DOM)
@@ -96,9 +101,9 @@ This extension is compliant with strict Content Security Policy (CSP) environmen
 
 ## Testing
 
-If you want to run the tests yourself:
+To build the project and run the tests against both source and minified versions for supported HTMX releases:
 
 1. Clone the repository.
 2. Run `npm install` to install dev dependencies.
 3. Ensure Chrome/Chromium is installed and the `CHROME_PATH` environment variable is set to its executable path.
-4. Run `npm test`.
+4. Run `npm test`. (This runs `npm run build` first). You can also run tests for specific versions/builds using scripts like `npm run test:v1:src`, `npm run test:v2:min`, etc.
