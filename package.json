@@ -5,8 +5,13 @@
     "main": "src/dynamic-url.js",
     "type": "module",
     "scripts": {
-      "test": "karma start karma.conf.cjs --single-run",
-      "test:watch": "karma start karma.conf.cjs"
+      "test": "npm run test:v1 && npm run test:v2",
+  
+      "test:v1": "cross-env HTMX_VERSION=v1 karma start karma.conf.cjs --single-run",
+      "test:watch:v1": "cross-env HTMX_VERSION=v1 karma start karma.conf.cjs",
+  
+      "test:v2": "cross-env HTMX_VERSION=v2 karma start karma.conf.cjs --single-run",
+      "test:watch:v2": "cross-env HTMX_VERSION=v2 karma start karma.conf.cjs"
     },
     "repository": {
       "type": "git",
@@ -21,15 +26,17 @@
       "dynamic",
       "parameter"
     ],
-    "author": "FumingPower3925",
-    "license": "MIT",
+    "author": "Your Name",
+    "license": "BSD-2-Clause",
     "bugs": {
       "url": "https://github.com/FumingPower3925/htmx-dynamic-url/issues"
     },
     "homepage": "https://github.com/FumingPower3925/htmx-dynamic-url#readme",
     "devDependencies": {
       "chai": "^4.3.10",
-      "htmx.org": "^1.9.12",
+      "cross-env": "^7.0.3",
+      "htmx-v1": "npm:htmx.org@^1.9.12",
+      "htmx-v2": "npm:htmx.org@^2.0.4",
       "karma": "^6.4.2",
       "karma-chai": "^0.1.0",
       "karma-chrome-launcher": "^3.2.0",
