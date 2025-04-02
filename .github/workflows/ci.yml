@@ -8,12 +8,13 @@ on:
 
 jobs:
   test:
-    name: Build and Test
+    name: Build and Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [18.x]
+        node-version: [18.x, 20.x, 22.x, 23.x]
 
     steps:
       - name: Checkout repository
