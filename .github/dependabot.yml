@@ -15,5 +15,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      reviewers:
-        - "FumingPower3925"
+    reviewers:
+      - "FumingPower3925"
+    assignees:
+      - "FumingPower3925"
