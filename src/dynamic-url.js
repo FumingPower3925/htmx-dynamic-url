@@ -1,88 +1,81 @@
 htmx.defineExtension('dynamic-url', {
     onEvent: function (name, evt) {
-        if (name === "htmx:configRequest") {
-            const element = evt.detail.elt;
-            let path = evt.detail.path;
-            const regex = /\{([^}]+)\}/g;
-            let changed = false;
+        if (name !== "htmx:configRequest") {
+            return;
+        }
 
-            const potentialVars = Array.from(path.matchAll(regex), m => m[1]);
-            if (potentialVars.length === 0) {
-                 return;
+        let originalPath = evt.detail.path;
+        const regex = /\{([^}]+)\}/g;
+
+        if (!regex.test(originalPath)) {
+             regex.lastIndex = 0;
+             return;
+        }
+        regex.lastIndex = 0;
+
+        const element = evt.detail.elt;
+        const resolver = typeof htmx.config.dynamicUrlResolver === 'function' ? htmx.config.dynamicUrlResolver : null;
+        const allowFallback = htmx.config.dynamicUrlAllowWindowFallback === true;
+        let pathChanged = false;
+
+        const resolveValue = (varName) => {
+            let value;
+            let resolved = false;
+
+            if (resolver) {
+                try {
+                    const resolvedValue = resolver(varName, element);
+                    if (resolvedValue !== undefined) {
+                        value = resolvedValue;
+                        resolved = true;
+                    }
+                } catch (e) {
+                    console.error(`dynamic-url: Error in resolver function for "${varName}"`, e);
+                }
             }
 
-            let finalPath = path;
-            const uniqueVars = new Set(potentialVars);
-
-            const resolver = typeof htmx.config.dynamicUrlResolver === 'function' ? htmx.config.dynamicUrlResolver : null;
-            const allowFallback = htmx.config.dynamicUrlAllowWindowFallback === true;
-
-            uniqueVars.forEach(varName => {
-                let value;
-                let resolved = false;
-
-                if (resolver) {
-                    try {
-                        const resolvedValue = resolver(varName);
-                        if (resolvedValue !== undefined) {
-                            value = resolvedValue;
-                            resolved = true;
+            if (!resolved && allowFallback) {
+                try {
+                    let current = window;
+                    const parts = varName.split('.');
+                    let found = true;
+                    for (const part of parts) {
+                        if (current === null || current === undefined || !Object.prototype.hasOwnProperty.call(current, part)) {
+                            found = false;
+                            break;
                         }
-                    } catch (e) {
-                         console.error(`dynamic-url: Error in resolver function for "${varName}"`, e);
+                        current = current[part];
                     }
-                }
 
-                if (!resolved && allowFallback) {
-                    try {
-                        if (varName.includes('.')) {
-                            const parts = varName.split('.');
-                            const baseVarName = parts[0];
-                            if (window.hasOwnProperty(baseVarName)) {
-                                let current = window[baseVarName];
-                                for (let i = 1; i < parts.length; i++) {
-                                    if (current === null || current === undefined) {
-                                        current = undefined;
-                                        break;
-                                    }
-                                    current = current[parts[i]];
-                                }
-                                if (current !== undefined) {
-                                    value = current;
-                                    resolved = true;
-                                }
-                            }
-                        } else {
-                            if (window.hasOwnProperty(varName)) {
-                                const potentialStore = window[varName];
-                                if (potentialStore && typeof potentialStore.get === 'function') {
-                                    value = potentialStore.get();
-                                    resolved = true;
-                                } else {
-                                    value = potentialStore;
-                                    resolved = true;
-                                }
-                            }
-                        }
-                    } catch (e) {
-                         console.error(`dynamic-url: Error during window fallback for "${varName}"`, e);
-                         resolved = false;
+                    if (found) {
+                        value = (current && typeof current.get === 'function') ? current.get() : current;
+                        resolved = true;
                     }
+                } catch (e) {
+                    console.error(`dynamic-url: Error during window fallback for "${varName}"`, e);
+                    resolved = false;
                 }
-
-                if (resolved) {
-                    const varRegex = new RegExp(`\\{${varName}\\}`, 'g');
-                    const valueString = String(value);
-                    finalPath = finalPath.replace(varRegex, encodeURIComponent(valueString));
-                    changed = true;
-                } else {
-                     console.warn(`dynamic-url: Could not resolve "${varName}". Resolver: ${resolver ? 'tried' : 'none'}, Fallback: ${allowFallback ? 'enabled' : 'disabled'}.`);
-                }
-            });
-
-            if (changed) {
-                evt.detail.path = finalPath;
             }
+
+            if (resolved) {
+                return { resolved: true, value: value };
+            } else {
+                console.warn(`dynamic-url: Could not resolve "${varName}". Resolver: ${resolver ? 'tried' : 'none'}, Fallback: ${allowFallback ? 'enabled' : 'disabled'}.`);
+                return { resolved: false };
+            }
+        };
+
+        const finalPath = originalPath.replace(regex, (match, varName) => {
+            const result = resolveValue(varName);
+            if (result.resolved) {
+                pathChanged = true;
+                return encodeURIComponent(String(result.value));
+            }
+            return match;
+        });
+
+        if (pathChanged) {
+            evt.detail.path = finalPath;
         }
     }
 });
