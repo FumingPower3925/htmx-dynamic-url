@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic URL - Nano Stores</title>
+    <style>body{font-family:sans-serif;padding:1em}button{margin-right:5px}#response-area{margin-top:1em;border:1px solid #ccc;padding:1em;min-height:40px;background-color:#f9f9f9}code{background-color:#eee;padding:2px 4px;border-radius:3px}</style>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js"></script>
+    <script type="module" src="script.js" defer></script>
+</head>
+<body hx-ext="dynamic-url">
+    <h1>Nano Stores</h1>
+    <p>User ID: <strong id="user-id">…</strong> | Item ID: <strong id="item-id">…</strong></p>
+    <button hx-get="/api/users/{userId}" hx-target="#response-area">GET User <code>{userId}</code></button>
+    <button hx-post="/api/items/{itemId}" hx-target="#response-area">POST Item <code>{itemId}</code></button>
+    <button id="change-state-btn">Change State</button>
+    <div id="response-area">(Action responses)</div>
+</body>
+</html>
