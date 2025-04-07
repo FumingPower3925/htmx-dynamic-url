@@ -1,6 +1,7 @@
 # Dynamic URL Extension (`dynamic-url`) for HTMX
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 **Resolve `{placeholders}` in HTMX request URLs based on your application's JavaScript state.**
 
 This extension allows you to use placeholder variables (`{myVar}`) within URL paths defined in `hx-*` attributes (like `hx-get`, `hx-post`, etc.). It dynamically resolves these variables against a configured JavaScript function just before the HTTP request is made, keeping your HTML clean and declarative.
