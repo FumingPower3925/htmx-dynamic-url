@@ -1,5 +1,5 @@
 node_modules/
-dist/
+dist/*.map
 coverage/
 *.log
 npm-debug.log*
