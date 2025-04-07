@@ -57,16 +57,16 @@ Use the jsDelivr CDN to load the extension. Replace `PLACEHOLDER...` with the co
 
 **Minified (Recommended for Production):**
 ```html
-<script src="[https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js](https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js)" integrity="sha384-PLACEHOLDER_FOR_HTMX_SRI" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 
-<script src="[https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js](https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js)" integrity="sha384-PLACEHOLDER_FOR_DYNAMIC_URL_SRI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js" integrity="sha384-xzJhFGTvjMySqCy1UJ/W3aBlfKC2xvFn/cxc0+VcRaJSL3HLvWX622kBDyi0c5Ro" crossorigin="anonymous"></script>
 ```
 
 **Source (for debugging):**
 ```html
-<script src="[https://unpkg.com/htmx.org@1.9.12/dist/htmx.js](https://www.google.com/search?q=https://unpkg.com/htmx.org%401.9.12/dist/htmx.js)" integrity="sha384-PLACEHOLDER_FOR_HTMX_SRC_SRI" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.js" integrity="sha384-qbtR4rS9RrUMECUWDWM2+YGgN3U4V4ZncZ0BvUcg9FGct0jqXz3PUdVpU1p0yrXS" crossorigin="anonymous"></script>
 
-<script src="[https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/src/dynamic-url.js](https://www.google.com/search?q=https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url%40main/src/dynamic-url.js)" integrity="sha384-PLACEHOLDER_FOR_DYNAMIC_URL_SRC_SRI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/src/dynamic-url.js" integrity="sha384-RdVIdMW+QYVcpskO4t93z4xDEt5Ax6ROTZ3VkQmZ2z5fNH9jY1c7VFreodRtBDiZ" crossorigin="anonymous"></script>
 ```
 > **Note:** Find the correct SRI hashes for the specific file versions you are using (e.g., via [srihash.org](https://www.srihash.org/)).
 
