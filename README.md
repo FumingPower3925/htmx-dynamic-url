@@ -187,6 +187,26 @@ htmx.config.dynamicUrlAllowWindowFallback = true;
 
 **Why avoid the fallback?** Relying on global `window` variables makes code harder to reason about, test, and maintain, especially in larger applications or when using modules. The explicit `dynamicUrlResolver` is much more robust although arguably more verbose.
 
+## Comparison with `htmx-ext-path-params`
+
+Both `dynamic-url` and the `htmx-ext-path-params` extension use a similar `{placeholder}` syntax to substitute values into the URL path before a request is made. However, they differ significantly in **where they source the values** for these placeholders:
+
+* **`htmx-dynamic-url` (This Extension):**
+    * Retrieves values by calling the configured `htmx.config.dynamicUrlResolver` JavaScript function.
+    * Your resolver function accesses your application's **JavaScript state** (variables, stores, signals, etc.) to find the correct value for a given placeholder name.
+    * It does **not** interact with or modify standard HTMX request parameters (`hx-vals`, included form fields, etc.).
+
+* **`htmx-ext-path-params`:**
+    * Retrieves values directly from **HTMX request parameters** (e.g., values defined in `hx-vals`, `hx-include`, or inherited parameters).
+    * It finds a parameter matching the placeholder name, uses its value for substitution, and then **removes** that parameter from the final request data (so it's not sent as a query parameter or in the request body).
+
+**When to Choose Which:**
+
+* Use **`dynamic-url`** when the dynamic parts of your URL come from broader application state managed in JavaScript.
+* Use **`path-params`** when the dynamic parts of your URL correspond directly to parameters being submitted with the HTMX request itself (often from form inputs or `hx-vals`).
+
+Choose the extension that best matches the source of your dynamic data. While they might technically coexist, using both simultaneously could lead to unexpected behavior depending on configuration and execution order.
+
 ## Placeholder Resolution Logic
 
 For each `{placeholder}` found in an `hx-*` URL attribute just before an HTMX request is made:
