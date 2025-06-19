@@ -54,7 +54,7 @@
     "karma-chrome-launcher": "^3.2.0",
     "karma-mocha": "^2.0.1",
     "mocha": "^11.6.0",
-    "terser": "^5.41.0"
+    "terser": "^5.42.0"
   },
   "files": [
     "src/dynamic-url.js",
