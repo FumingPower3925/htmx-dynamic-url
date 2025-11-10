@@ -53,8 +53,8 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.2.0",
     "karma-mocha": "^2.0.1",
-    "mocha": "^11.7.4",
-    "terser": "^5.44.1"
+    "mocha": "^11.7.5",
+    "terser": "^5.44.1
   },
   "files": [
     "src/dynamic-url.js",
