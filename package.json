@@ -6,20 +6,14 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist",
-
     "build": "npm run clean && mkdir -p dist && terser src/dynamic-url.js --compress --mangle --output dist/dynamic-url.min.js --source-map \"filename='dist/dynamic-url.min.js.map',url='dynamic-url.min.js.map'\"",
-
     "test": "npm run build && npm run test:src && npm run test:min",
-
     "test:src": "npm run test:v1:src && npm run test:v2:src",
-
     "test:min": "npm run test:v1:min && npm run test:v2:min",
-
     "test:v1:src": "cross-env HTMX_VERSION=v1 EXT_FILE=src karma start karma.conf.cjs --single-run",
     "test:v1:min": "cross-env HTMX_VERSION=v1 EXT_FILE=min karma start karma.conf.cjs --single-run",
     "test:v2:src": "cross-env HTMX_VERSION=v2 EXT_FILE=src karma start karma.conf.cjs --single-run",
     "test:v2:min": "cross-env HTMX_VERSION=v2 EXT_FILE=min karma start karma.conf.cjs --single-run",
-
     "test:watch:v1:src": "cross-env HTMX_VERSION=v1 EXT_FILE=src karma start karma.conf.cjs",
     "test:watch:v1:min": "cross-env HTMX_VERSION=v1 EXT_FILE=min karma start karma.conf.cjs",
     "test:watch:v2:src": "cross-env HTMX_VERSION=v2 EXT_FILE=src karma start karma.conf.cjs",
@@ -48,12 +42,13 @@
     "chai": "^4.5.0",
     "cross-env": "^10.1.0",
     "htmx-v1": "npm:htmx.org@^1.9.12",
-    "htmx-v2": "npm:htmx.org@^2.0.4",
+    "htmx-v2": "npm:htmx.org@^2.0.8",
     "karma": "^6.4.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.2.0",
+    "karma-firefox-launcher": "^2.1.3",
     "karma-mocha": "^2.0.1",
-    "mocha": "^11.7.5",
+    "mocha": "^11.3.0",
     "terser": "^5.46.1"
   },
   "files": [
@@ -61,5 +56,8 @@
     "dist",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "overrides": {
+    "serialize-javascript": "^7.0.4"
+  }
 }

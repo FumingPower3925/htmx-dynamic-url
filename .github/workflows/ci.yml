@@ -1,36 +1,49 @@
-name: Node.js CI & Test
+name: CI & Test
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 8:00 UTC
 
 jobs:
   test:
-    name: Build and Test (Node ${{ matrix.node-version }})
+    name: Test (${{ matrix.browser.name }})
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18.x, 20.x, 22.x, 23.x]
+        browser:
+          - { name: "Chrome Stable",       karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "stable" }
+          - { name: "Chrome Beta",         karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "beta" }
+          - { name: "Chrome Dev",          karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "dev" }
+          - { name: "Firefox Stable",      karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest" }
+          - { name: "Firefox ESR",         karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-esr" }
+          - { name: "Firefox Beta",        karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-beta" }
+          - { name: "Firefox Dev Edition", karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-devedition" }
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: lts/*
           cache: 'npm'
+
+      - name: Set up browser
+        uses: ${{ matrix.browser.action }}@latest
+        with:
+          browser-version: ${{ matrix.browser.version }}
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Set CHROME_PATH environment variable
-        run: echo "CHROME_PATH=$(which google-chrome || which chromium || which chromium-browser || echo '/usr/bin/google-chrome')" >> $GITHUB_ENV
-
       - name: Run tests
+        env:
+          KARMA_BROWSER: ${{ matrix.browser.karma }}
         run: npm test
