@@ -7,8 +7,11 @@ module.exports = function(config) {
                   ? 'dist/dynamic-url.min.js'
                   : 'src/dynamic-url.js';
 
+  const browser = process.env.KARMA_BROWSER || 'ChromeHeadless';
+
   console.log(`[Karma Config] Loading HTMX version '${htmxVersion}' from: ${htmxPath}`);
   console.log(`[Karma Config] Loading Extension from: ${extPath}`);
+  console.log(`[Karma Config] Browser: ${browser}`);
 
   config.set({
     basePath: '',
@@ -25,7 +28,7 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['ChromeHeadless'],
+    browsers: [browser],
     singleRun: true,
     concurrency: Infinity,
     client: {
