@@ -42,7 +42,7 @@
     "chai": "^4.5.0",
     "cross-env": "^10.1.0",
     "htmx-v1": "npm:htmx.org@^1.9.12",
-    "htmx-v2": "npm:htmx.org@^2.0.4",
+    "htmx-v2": "npm:htmx.org@^2.0.8",
     "karma": "^6.4.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.2.0",
