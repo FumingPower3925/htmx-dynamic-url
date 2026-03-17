@@ -17,13 +17,13 @@ jobs:
       fail-fast: false
       matrix:
         browser:
-          - { name: "Chrome Stable",       karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "stable" }
-          - { name: "Chrome Beta",         karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "beta" }
-          - { name: "Chrome Dev",          karma: "ChromeHeadless",  action: "browser-actions/setup-chrome",  version: "dev" }
-          - { name: "Firefox Stable",      karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest" }
-          - { name: "Firefox ESR",         karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-esr" }
-          - { name: "Firefox Beta",        karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-beta" }
-          - { name: "Firefox Dev Edition", karma: "FirefoxHeadless", action: "browser-actions/setup-firefox", version: "latest-devedition" }
+          - { name: "Chrome Stable",       karma: "ChromeHeadless",  type: "chrome",  version: "stable" }
+          - { name: "Chrome Beta",         karma: "ChromeHeadless",  type: "chrome",  version: "beta" }
+          - { name: "Chrome Dev",          karma: "ChromeHeadless",  type: "chrome",  version: "dev" }
+          - { name: "Firefox Stable",      karma: "FirefoxHeadless", type: "firefox", version: "latest" }
+          - { name: "Firefox ESR",         karma: "FirefoxHeadless", type: "firefox", version: "latest-esr" }
+          - { name: "Firefox Beta",        karma: "FirefoxHeadless", type: "firefox", version: "latest-beta" }
+          - { name: "Firefox Dev Edition", karma: "FirefoxHeadless", type: "firefox", version: "latest-devedition" }
 
     steps:
       - name: Checkout repository
@@ -35,10 +35,17 @@ jobs:
           node-version: lts/*
           cache: 'npm'
 
-      - name: Set up browser
-        uses: ${{ matrix.browser.action }}@latest
+      - name: Set up Chrome
+        if: matrix.browser.type == 'chrome'
+        uses: browser-actions/setup-chrome@latest
         with:
-          browser-version: ${{ matrix.browser.version }}
+          chrome-version: ${{ matrix.browser.version }}
+
+      - name: Set up Firefox
+        if: matrix.browser.type == 'firefox'
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: ${{ matrix.browser.version }}
 
       - name: Install dependencies
         run: npm ci
