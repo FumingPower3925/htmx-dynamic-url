@@ -49,7 +49,7 @@
     "karma-firefox-launcher": "^2.1.3",
     "karma-mocha": "^2.0.1",
     "mocha": "^11.7.5",
-    "terser": "^5.46.2"
+    "terser": "^5.47.1"
   },
   "files": [
     "src/dynamic-url.js",
