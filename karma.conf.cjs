@@ -29,6 +29,16 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: false,
     browsers: [browser],
+    // Chrome-for-Testing builds (what setup-chrome installs in CI) ship without the
+    // SUID sandbox helper, and Ubuntu 23.10+ blocks the unprivileged-userns fallback
+    // via AppArmor, so plain ChromeHeadless cannot start there. Only CI opts into
+    // this launcher; local runs use the sandboxed default.
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    },
     singleRun: true,
     concurrency: Infinity,
     client: {

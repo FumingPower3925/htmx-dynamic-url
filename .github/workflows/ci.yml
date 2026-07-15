@@ -17,9 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         browser:
-          - { name: "Chrome Stable",       karma: "ChromeHeadless",  type: "chrome",  version: "stable" }
-          - { name: "Chrome Beta",         karma: "ChromeHeadless",  type: "chrome",  version: "beta" }
-          - { name: "Chrome Dev",          karma: "ChromeHeadless",  type: "chrome",  version: "dev" }
+          - { name: "Chrome Stable",       karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "stable" }
+          - { name: "Chrome Beta",         karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "beta" }
+          - { name: "Chrome Dev",          karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "dev" }
           - { name: "Firefox Stable",      karma: "FirefoxHeadless", type: "firefox", version: "latest" }
           - { name: "Firefox ESR",         karma: "FirefoxHeadless", type: "firefox", version: "latest-esr" }
           - { name: "Firefox Beta",        karma: "FirefoxHeadless", type: "firefox", version: "latest-beta" }
@@ -36,6 +36,7 @@ jobs:
           cache: 'npm'
 
       - name: Set up Chrome
+        id: setup-chrome
         if: matrix.browser.type == 'chrome'
         uses: browser-actions/setup-chrome@latest
         with:
@@ -47,10 +48,25 @@ jobs:
         with:
           firefox-version: ${{ matrix.browser.version }}
 
+      - name: Report browser under test
+        run: |
+          if [ "${{ matrix.browser.type }}" = "chrome" ]; then
+            echo "chrome-path: ${{ steps.setup-chrome.outputs.chrome-path }}"
+            echo "version: $("${{ steps.setup-chrome.outputs.chrome-path }}" --version)"
+          else
+            echo "version: $(firefox --version)"
+          fi
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
         env:
           KARMA_BROWSER: ${{ matrix.browser.karma }}
+          # karma-chrome-launcher resolves ChromeHeadless by looking up the name
+          # `google-chrome` on PATH, which finds the runner's preinstalled stable
+          # Chrome and ignores the binary setup-chrome just installed. Pointing
+          # CHROME_BIN at that binary is what makes the beta/dev jobs test the
+          # browser they claim to. Empty on Firefox jobs, which don't read it.
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: npm test
