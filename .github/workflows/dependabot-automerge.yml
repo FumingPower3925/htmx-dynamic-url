@@ -1,0 +1,29 @@
+name: Dependabot auto-merge
+
+on: pull_request
+
+# Workflows triggered by Dependabot get a read-only token by default; these
+# scopes are what let `gh pr merge --auto` act on the PR.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    name: Enable auto-merge
+    runs-on: ubuntu-latest
+    # The repository guard stops forks from running this against their own copy.
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.repository == 'FumingPower3925/htmx-dynamic-url'
+
+    steps:
+      - name: Enable auto-merge
+        # --auto queues the merge rather than performing it: main's branch
+        # protection holds the PR until every required CI check passes, and a
+        # red matrix leaves it sitting open. Every dependency here is dev-only
+        # and unreachable by consumers, so a green suite is a sufficient gate.
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
