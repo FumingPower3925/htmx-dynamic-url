@@ -17,9 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         browser:
-          - { name: "Chrome Stable",       karma: "ChromeHeadless",  type: "chrome",  version: "stable" }
-          - { name: "Chrome Beta",         karma: "ChromeHeadless",  type: "chrome",  version: "beta" }
-          - { name: "Chrome Dev",          karma: "ChromeHeadless",  type: "chrome",  version: "dev" }
+          - { name: "Chrome Stable",       karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "stable" }
+          - { name: "Chrome Beta",         karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "beta" }
+          - { name: "Chrome Dev",          karma: "ChromeHeadlessNoSandbox", type: "chrome",  version: "dev" }
           - { name: "Firefox Stable",      karma: "FirefoxHeadless", type: "firefox", version: "latest" }
           - { name: "Firefox ESR",         karma: "FirefoxHeadless", type: "firefox", version: "latest-esr" }
           - { name: "Firefox Beta",        karma: "FirefoxHeadless", type: "firefox", version: "latest-beta" }
