@@ -14,7 +14,15 @@ updates:
       - dependency-name: "chai"
         versions: [">= 5.0.0"]
     groups:
+      # `groups` defaults to applies-to: version-updates, so security updates
+      # bypassed grouping entirely and arrived as one PR each. Both scopes need
+      # their own group to actually be batched.
       all-npm-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      all-npm-security-updates:
+        applies-to: security-updates
         patterns:
           - "*"
 
@@ -28,5 +36,10 @@ updates:
       - "FumingPower3925"
     groups:
       all-github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      all-github-actions-security-updates:
+        applies-to: security-updates
         patterns:
           - "*"
