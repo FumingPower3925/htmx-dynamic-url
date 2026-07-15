@@ -59,7 +59,7 @@ Use the jsDelivr CDN to load the extension. Replace `PLACEHOLDER...` with the co
 ```html
 <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js" integrity="sha384-xzJhFGTvjMySqCy1UJ/W3aBlfKC2xvFn/cxc0+VcRaJSL3HLvWX622kBDyi0c5Ro" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js" integrity="sha384-xxVgKkpktWTjUH4Cm0qayrpF+ExQhdH4qTYclC+Nnk9ueDVuDhbD6xmypjjRKUzG" crossorigin="anonymous"></script>
 ```
 
 **Source (for debugging):**
@@ -275,7 +275,7 @@ When loading this extension (or HTMX itself) from a CDN, it is highly recommende
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/FumingPower3925/htmx-dynamic-url@main/dist/dynamic-url.min.js"
-        integrity="sha384-xzJhFGTvjMySqCy1UJ/W3aBlfKC2xvFn/cxc0+VcRaJSL3HLvWX622kBDyi0c5Ro"
+        integrity="sha384-xxVgKkpktWTjUH4Cm0qayrpF+ExQhdH4qTYclC+Nnk9ueDVuDhbD6xmypjjRKUzG"
         crossorigin="anonymous"></script>
 ```
 
